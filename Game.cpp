@@ -1,16 +1,16 @@
 //=============================================================================
 //
-// ‰æ–Ê‘JˆÚ [Game.cpp]
+// ç”»é¢é·ç§» [Game.cpp]
 // Author : NARITADA SUZUKI
 //
 //=============================================================================
 //*****************************************************************************
-// ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+// ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //*****************************************************************************
 #include "Game.h"
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
 #define P1 ("data/TEXTURE/P_Wait.png")
 #define P2 ("data/TEXTURE/P2_Wait.png")
@@ -18,12 +18,12 @@
 #define P_E1 (20)
 #define E_E1 (20)
 //=============================================================================
-// ‰Šú‰»ŠÖ”
+// åˆæœŸåŒ–é–¢æ•°
 //=============================================================================
-HRESULT GameMODE::InitGame(int nPflag)//ƒQ[ƒ€‰æ–Ê‰Šú‰»‚ÅŒ‹‰Ê‚ğ•Ô‚·
+HRESULT GameMODE::InitGame(int nPflag)//ã‚²ãƒ¼ãƒ ç”»é¢åˆæœŸåŒ–ã§çµæœã‚’è¿”ã™
 {
 	nLCnt=0;
-	//“GƒvƒŒƒCƒ„[‰Šú‰»
+	//æ•µãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼åˆæœŸåŒ–
 	m_nPMode = nPflag;
 	if(m_nPMode==CHARA2_MODE)
 	{
@@ -33,22 +33,22 @@ HRESULT GameMODE::InitGame(int nPflag)//ƒQ[ƒ€‰æ–Ê‰Šú‰»‚ÅŒ‹‰Ê‚ğ•Ô‚·
 	}
 	cBullet.InitBullet(BULLETIMG,BSIZE_W,BSIZE_H,0,0,1,1,0);
 	cEnemy.InitEnemy(E1,ESIZE_W,ESIZE_H,PPOS_X,PPOS_Y,1.0,1.0,0);
-	//ƒ|ƒŠƒSƒ“‰Šú‰»
-	GameBG.InitGameBG();//‚a‚f‰Šú‰»
+	//ãƒãƒªã‚´ãƒ³åˆæœŸåŒ–
+	GameBG.InitGameBG();//ï¼¢ï¼§åˆæœŸåŒ–
 	GameBG0.InitGameBG();
 	GameBG2.InitGameBG2();
 	GameBG3.InitGameBG3();
 	GamePoseMenu.InitGamePS();
-	cScore.InitScore();//ƒXƒRƒA‰Šú‰»
-	c_Effect.EffectInit(BULLETIMG);//ƒGƒtƒFƒNƒgƒ[ƒh
-	c_nGameFlag=MAINGAME;//ƒQ[ƒ€‚Ì—¬‚êƒZƒbƒg
+	cScore.InitScore();//ã‚¹ã‚³ã‚¢åˆæœŸåŒ–
+	c_Effect.EffectInit(BULLETIMG);//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãƒ­ãƒ¼ãƒ‰
+	c_nGameFlag=MAINGAME;//ã‚²ãƒ¼ãƒ ã®æµã‚Œã‚»ãƒƒãƒˆ
 	PlaySound(SOUND_LABEL_BGM001);
 	return S_OK;
 }
 //=============================================================================
-// I—¹ˆ—ŠÖ”
+// çµ‚äº†å‡¦ç†é–¢æ•°
 //=============================================================================
-int GameMODE::UnInitGame(void)//ƒQ[ƒ€‰æ–ÊI—¹ˆ—
+int GameMODE::UnInitGame(void)//ã‚²ãƒ¼ãƒ ç”»é¢çµ‚äº†å‡¦ç†
 {
 	int nScore=cScore.GetSCore();
 	cPlayer1.UninitPlayer();
@@ -66,11 +66,11 @@ int GameMODE::UnInitGame(void)//ƒQ[ƒ€‰æ–ÊI—¹ˆ—
 	return nScore;
 }
 //=============================================================================
-// ƒAƒbƒvƒf[ƒgŠÖ”
+// ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆé–¢æ•°
 //=============================================================================
-void GameMODE::UpdateGame(void)//ƒQ[ƒ€‰æ–ÊƒAƒbƒvƒf[ƒg
+void GameMODE::UpdateGame(void)//ã‚²ãƒ¼ãƒ ç”»é¢ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆ
 {
-	//ƒ|[ƒYƒ`ƒFƒbƒN
+	//ãƒãƒ¼ã‚ºãƒã‚§ãƒƒã‚¯
 	if(cPlayer1.GetLFlag()<=0)
 	{
 		c_Gmode.SetFlag(MODE_RESLUT);	
@@ -84,13 +84,13 @@ void GameMODE::UpdateGame(void)//ƒQ[ƒ€‰æ–ÊƒAƒbƒvƒf[ƒg
 	{
 		c_Gmode.SetFlag(MODE_TITLE);	
 	}else
-	if(c_nGameFlag==POSEGAME)//ƒ|[ƒYƒ‚[ƒh
+	if(c_nGameFlag==POSEGAME)//ãƒãƒ¼ã‚ºãƒ¢ãƒ¼ãƒ‰
 	{
 		c_nGameFlag=GamePoseMenu.UpdateGamePS();
 
-	}else{//ƒQ[ƒ€ƒ‚[ƒh
+	}else{//ã‚²ãƒ¼ãƒ ãƒ¢ãƒ¼ãƒ‰
 		cPlayer1.SetSpeed(Speed);
-		if(GetKeyboardTrigger(DIK_P))//P‚Åƒ|[ƒYØ‚è‘Ö‚¦
+		if(GetKeyboardTrigger(DIK_P))//Pã§ãƒãƒ¼ã‚ºåˆ‡ã‚Šæ›¿ãˆ
 	{
 		if(c_nGameFlag==MAINGAME)
 		{
@@ -100,18 +100,18 @@ void GameMODE::UpdateGame(void)//ƒQ[ƒ€‰æ–ÊƒAƒbƒvƒf[ƒg
 				cPlayer1.SetFeed(1);
 		if(GetKeyboardTrigger(DIK_F5))
 		{
-			cPlayer1.PlayerReset(PPOS_X,PPOS_Y);//ƒvƒŒƒCƒ„[ƒŠƒZƒbƒg
+			cPlayer1.PlayerReset(PPOS_X,PPOS_Y);//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãƒªã‚»ãƒƒãƒˆ
 		}else
 		if(GetKeyboardTrigger(DIK_SPACE)==TRUE&&cPlayer1.GetLFlag()!=0)
 		{
 			if(m_nPMode==CHARA2_MODE)
 			{
- 			cBullet.SetBullet(cPlayer1.PoschkX(),cPlayer1.PoschkY(),PLAYER1_B);//’eƒZƒbƒg
+ 			cBullet.SetBullet(cPlayer1.PoschkX(),cPlayer1.PoschkY(),PLAYER1_B);//å¼¾ã‚»ãƒƒãƒˆ
 			}else{
-			cBullet.SetBullet(cPlayer1.PoschkX(),cPlayer1.PoschkY(),PLAYER2_B);//’eƒZƒbƒg
+			cBullet.SetBullet(cPlayer1.PoschkX(),cPlayer1.PoschkY(),PLAYER2_B);//å¼¾ã‚»ãƒƒãƒˆ
 			}
 		}else
-		if(GetKeyboardPress(DIK_LSHIFT)==TRUE&&cPlayer1.GetLFlag()!=0)//‚ ‚½‚è”»’èƒ`ƒFƒbƒN
+		if(GetKeyboardPress(DIK_LSHIFT)==TRUE&&cPlayer1.GetLFlag()!=0)//ã‚ãŸã‚Šåˆ¤å®šãƒã‚§ãƒƒã‚¯
 		{
 			cPlayer1.SetSpeed(Speed*0.7f);
  			c_Effect.EffectSet(cPlayer1.PoschkX()+(PSIZE_W/2)-(PSIZE_HW/2),cPlayer1.PoschkY()+(PSIZE_H/2)-(PSIZE_HW/2),PSIZE_HW,PSIZE_HW,P_E1,1.0f,0.2f,0.2f,E_P1_B);
@@ -119,28 +119,28 @@ void GameMODE::UpdateGame(void)//ƒQ[ƒ€‰æ–ÊƒAƒbƒvƒf[ƒg
 		}
 
 
-		for(int nLoopE=0;nLoopE<ENEMY_MAX;nLoopE++)//“Gƒ`ƒFƒbƒN
+		for(int nLoopE=0;nLoopE<ENEMY_MAX;nLoopE++)//æ•µãƒã‚§ãƒƒã‚¯
 		{
-			if(cEnemy.GetBFLag(nLoopE)!=0&&cEnemy.GetFLag(nLoopE)!=0)//“G‚Ì’eƒZƒbƒg
+			if(cEnemy.GetBFLag(nLoopE)!=0&&cEnemy.GetFLag(nLoopE)!=0)//æ•µã®å¼¾ã‚»ãƒƒãƒˆ
 			{
 				cBullet.SetBullet(cEnemy.GetEnemyX(nLoopE),cEnemy.GetEnemyY(nLoopE),ENEMY1_B);
 			}
 
 		}
 
-		for(int nLoop=0;nLoop<BULLET_MAX;nLoop++)//’eƒ`ƒFƒbƒN
+		for(int nLoop=0;nLoop<BULLET_MAX;nLoop++)//å¼¾ãƒã‚§ãƒƒã‚¯
 		{
-			for(int nLoop2=0;nLoop2<ENEMY_MAX;nLoop2++)//“G‚Æƒ`ƒFƒbƒN
+			for(int nLoop2=0;nLoop2<ENEMY_MAX;nLoop2++)//æ•µã¨ãƒã‚§ãƒƒã‚¯
 			{
 				if(cBullet.BulletFlagChk(nLoop)==PLAYER1_B)
 				{
-					c_Effect.EffectSet(cBullet.GetBulletX(nLoop),cBullet.GetBulletY(nLoop),EFFECT_SIZE1,EFFECT_SIZE1,P_E1,0.5f,1.0f,0.0f,E_P1_B);//ƒvƒŒƒCƒ„[’e
+					c_Effect.EffectSet(cBullet.GetBulletX(nLoop),cBullet.GetBulletY(nLoop),EFFECT_SIZE1,EFFECT_SIZE1,P_E1,0.5f,1.0f,0.0f,E_P1_B);//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼å¼¾
 					if(cEnemy.EnemyChkFlag(nLoop2)==1)
 					{
 					if(cHichk.HitChk(	cBullet.GetBulletX(nLoop),cBullet.GetBulletY(nLoop),BSIZE_W,BSIZE_H,
 										cEnemy.GetEnemyX(nLoop2),cEnemy.GetEnemyY(nLoop2),ESIZE_W,ESIZE_H,QUATOQUA)==1)
 					{
-						c_Effect.EffectSet(cEnemy.GetEnemyX(nLoop2),cEnemy.GetEnemyY(nLoop2),EFFECT_EXPLO,EFFECT_EXPLO,P_E1,1.0f,0.5f,0.5f,E_Ex);//”š”­
+						c_Effect.EffectSet(cEnemy.GetEnemyX(nLoop2),cEnemy.GetEnemyY(nLoop2),EFFECT_EXPLO,EFFECT_EXPLO,P_E1,1.0f,0.5f,0.5f,E_Ex);//çˆ†ç™º
 						cBullet.SetBulletFlag(nLoop,0);
 						cEnemy.SetEnemyFlag(nLoop2,NONE_B);
 						cScore.AddScore(10);
@@ -150,13 +150,13 @@ void GameMODE::UpdateGame(void)//ƒQ[ƒ€‰æ–ÊƒAƒbƒvƒf[ƒg
 				}else
 				if(cBullet.BulletFlagChk(nLoop)==PLAYER2_B)
 				{
-					c_Effect.EffectSet(cBullet.GetBulletX(nLoop),cBullet.GetBulletY(nLoop),EFFECT_SIZE1,EFFECT_SIZE1,P_E1,0.5f,1.0f,0.0f,E_P2_B);//ƒvƒŒƒCƒ„[’e
+					c_Effect.EffectSet(cBullet.GetBulletX(nLoop),cBullet.GetBulletY(nLoop),EFFECT_SIZE1,EFFECT_SIZE1,P_E1,0.5f,1.0f,0.0f,E_P2_B);//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼å¼¾
 					if(cEnemy.EnemyChkFlag(nLoop2)==1)
 					{
 					if(cHichk.HitChk(	cBullet.GetBulletX(nLoop),cBullet.GetBulletY(nLoop),BSIZE_W*2,BSIZE_H*2,
 										cEnemy.GetEnemyX(nLoop2),cEnemy.GetEnemyY(nLoop2),ESIZE_W,ESIZE_H,QUATOQUA)==1)
 					{
-						c_Effect.EffectSet(cEnemy.GetEnemyX(nLoop2),cEnemy.GetEnemyY(nLoop2),EFFECT_EXPLO,EFFECT_EXPLO,P_E1,1.0f,0.5f,0.5f,E_Ex);//”š”­
+						c_Effect.EffectSet(cEnemy.GetEnemyX(nLoop2),cEnemy.GetEnemyY(nLoop2),EFFECT_EXPLO,EFFECT_EXPLO,P_E1,1.0f,0.5f,0.5f,E_Ex);//çˆ†ç™º
 						cEnemy.SetEnemyFlag(nLoop2,NONE_B);
 						PlaySound(SOUND_LABEL_SE_EXPLOSION);
 						cScore.AddScore(10);
@@ -165,7 +165,7 @@ void GameMODE::UpdateGame(void)//ƒQ[ƒ€‰æ–ÊƒAƒbƒvƒf[ƒg
 				}else//if
 					if(cBullet.BulletFlagChk(nLoop)==ENEMY1_B)
 					{
-					c_Effect.EffectSet(cBullet.GetBulletX(nLoop),cBullet.GetBulletY(nLoop),EFFECT_SIZE2,EFFECT_SIZE2,E_E1,0.2f,0.1f,0.2f,E_E1_B);//“G’e
+					c_Effect.EffectSet(cBullet.GetBulletX(nLoop),cBullet.GetBulletY(nLoop),EFFECT_SIZE2,EFFECT_SIZE2,E_E1,0.2f,0.1f,0.2f,E_E1_B);//æ•µå¼¾
 						if(cHichk.HitChk(	cBullet.GetBulletX(nLoop)+(BSIZE_W/2),cBullet.GetBulletY(nLoop)+(BSIZE_H/2),BSIZE_W,BSIZE_H,
 						cPlayer1.PoschkX()+(PSIZE_W/2),cPlayer1.PoschkY()+(PSIZE_H/2),PSIZE_HW/2,PSIZE_HW/2,CIRTOCIR)==1)
 						{
@@ -176,7 +176,7 @@ void GameMODE::UpdateGame(void)//ƒQ[ƒ€‰æ–ÊƒAƒbƒvƒf[ƒg
 							PlaySound(SOUND_LABEL_SE_HIT000);
 							nLCnt++;
 							}
-						}//“G‚Ì‹Ê‚ÆƒvƒŒƒCƒ„[ƒ`ƒFƒbƒN
+						}//æ•µã®ç‰ã¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãƒã‚§ãƒƒã‚¯
 					}
 				}//for
 		}//
@@ -206,21 +206,21 @@ if(nLCnt!=0)
 			nLCnt=0;
 		}
 }
-		cPlayer1.PlayerUpdate();//ƒvƒŒƒCƒ„[‚ğƒAƒbƒvƒf[ƒg
-		cBullet.BulletUpdate(cPlayer1.PoschkX(),cPlayer1.PoschkY());//’eƒAƒbƒvƒf[ƒg
-		cEnemy.EnemyUpdate();//“GƒAƒbƒvƒf[ƒg
+		cPlayer1.PlayerUpdate();//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆ
+		cBullet.BulletUpdate(cPlayer1.PoschkX(),cPlayer1.PoschkY());//å¼¾ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆ
+		cEnemy.EnemyUpdate();//æ•µã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆ
 		cScore.UpdateScore();
 		c_Effect.EffectUpdate();
 		GameBG.UpdateGameBG();
 		GameBG2.UpdateGameBG2(cPlayer1.PoschkX());
 		GameBG3.UpdateGameBG3(cPlayer1.PoschkX());
 		GameBG0.UpdateGameBG();
-	}//ƒQ[ƒ€’†
+	}//ã‚²ãƒ¼ãƒ ä¸­
 }
 //=============================================================================
-// •`‰æŠÖ”
+// æç”»é–¢æ•°
 //=============================================================================
-void GameMODE::DrawGame(void)//ƒQ[ƒ€‰æ–Ê•`‰æ
+void GameMODE::DrawGame(void)//ã‚²ãƒ¼ãƒ ç”»é¢æç”»
 {
 		GameBG.DrawGameBG();
 		GameBG3.DrawGameBG3();
@@ -235,7 +235,7 @@ void GameMODE::DrawGame(void)//ƒQ[ƒ€‰æ–Ê•`‰æ
 
 		GameBG0.DrawGameBG(cPlayer1.GetLFlag());
 		cScore.DrawScore();
-			if(c_nGameFlag==POSEGAME)//ƒ|[ƒYƒ‚[ƒh
+			if(c_nGameFlag==POSEGAME)//ãƒãƒ¼ã‚ºãƒ¢ãƒ¼ãƒ‰
 			{
 				GamePoseMenu.DrawGamePS();
 			}
@@ -246,16 +246,16 @@ void GameMODE::GameReset(void)
 {
 	StopSound();
 	nLCnt=0;
-		//“GƒvƒŒƒCƒ„[‰Šú‰»
+		//æ•µãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼åˆæœŸåŒ–
 	cPlayer1.InitPlayer(P1,PSIZE_W,PSIZE_H,PPOS_X,PPOS_Y,1.0,1.0,1);
 	cBullet.InitBullet(BULLETIMG,BSIZE_W,BSIZE_H,0,0,1,1,0);
 	cEnemy.InitEnemy(E1,ESIZE_W,ESIZE_H,PPOS_X,PPOS_Y,1.0,1.0,1);
-	//ƒ|ƒŠƒSƒ“‰Šú‰»
-	GameBG.InitGameBG();//‚a‚f‰Šú‰»
+	//ãƒãƒªã‚´ãƒ³åˆæœŸåŒ–
+	GameBG.InitGameBG();//ï¼¢ï¼§åˆæœŸåŒ–
 	GameBG0.InitGameBG();
 	GameBG2.InitGameBG2();
 	GameBG3.InitGameBG3();
-	cScore.InitScore();//ƒXƒRƒA‰Šú‰»
-	c_Effect.EffectInit(BULLETIMG);//ƒGƒtƒFƒNƒgƒ[ƒh
-	c_nGameFlag=MAINGAME;//ƒQ[ƒ€‚Ì—¬‚êƒZƒbƒg
+	cScore.InitScore();//ã‚¹ã‚³ã‚¢åˆæœŸåŒ–
+	c_Effect.EffectInit(BULLETIMG);//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãƒ­ãƒ¼ãƒ‰
+	c_nGameFlag=MAINGAME;//ã‚²ãƒ¼ãƒ ã®æµã‚Œã‚»ãƒƒãƒˆ
 }
