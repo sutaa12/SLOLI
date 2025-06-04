@@ -1,37 +1,92 @@
 //=============================================================================
 //
-// ƒvƒŒƒCƒ„[ŠÇ— [Enemy.cpp]
+// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç®¡ç† [Enemy.cpp]
 // Author : NARITADA SUZUKI
 //
 #ifndef ENEMY_
 #define ENEMY_
 //=============================================================================
-//ƒCƒ“ƒNƒ‹[ƒh
+//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
 //*****************************************************************************
 #include"main.h"
 #include"Polygon.h"
 #include"Base.h"
 #include "Bullet.h"
+#include"EnemyConstants.h"
 
 //*****************************************************************************
-//ƒ}ƒNƒ’è‹`
+//ãƒã‚¯ãƒ­å®šç¾©
 #define ESIZE_W (50)
 #define ESIZE_H (25)
 
 #define ENEMY_MAX (10)
 //=============================================================================
-//ƒNƒ‰ƒX’è‹`
+//åŸºåº•æ•µã‚¯ãƒ©ã‚¹å®šç¾©
+//=============================================================================
+class Enemy
+{
+protected:
+	cBase* enemyBase;
+	int index;
+	
+public:
+	Enemy(cBase* base, int idx) : enemyBase(base), index(idx) {}
+	virtual ~Enemy() {}
+	virtual void Update() = 0;
+	virtual void Move() = 0;
+	virtual void SetMovementPattern() = 0;
+	virtual int GetEnemyType() = 0;
+};
+
+//=============================================================================
+//åŸºæœ¬æ•µã‚¯ãƒ©ã‚¹å®šç¾©
+//=============================================================================
+class BasicEnemy : public Enemy
+{
+public:
+	BasicEnemy(cBase* base, int idx) : Enemy(base, idx) {}
+	void Update() override;
+	void Move() override;
+	void SetMovementPattern() override;
+	int GetEnemyType() override { return ENEMY_TYPE_BASIC; }
+};
+
+//=============================================================================
+//ã‚¸ãƒ£ãƒ³ãƒ—æ•µã‚¯ãƒ©ã‚¹å®šç¾©
+//=============================================================================
+class JumpingEnemy : public Enemy
+{
+private:
+	int jumpTimer;
+	int nextJumpTime;
+	float jumpVelocityY;
+	bool isJumping;
+	
+public:
+	JumpingEnemy(cBase* base, int idx);
+	void Update() override;
+	void Move() override;
+	void SetMovementPattern() override;
+	int GetEnemyType() override { return ENEMY_TYPE_JUMPING; }
+	
+private:
+	void InitiateJump();
+	void UpdateJumpPhysics();
+};
+
+//=============================================================================
+//æ•µç®¡ç†ã‚¯ãƒ©ã‚¹å®šç¾©
 //=============================================================================
 class ENEMYMANAGE
 {
 public:
-	void EnemyUpdate();//“G‚Ì‚ ‚Á‚Õ‚Å[‚Æ
-	int EnemyChkFlag(int nNum);//ƒtƒ‰ƒOƒ`ƒFƒbƒN
+	void EnemyUpdate();//æ•µã®ã‚ã£ã·ã§ãƒ¼ã¨
+	int EnemyChkFlag(int nNum);//ãƒ•ãƒ©ã‚°ãƒã‚§ãƒƒã‚¯
 	
 	void InitEnemy(char *cTexPass,int nEwidth,int nEheight,int nEPosX,int nEPosY,float fTexX,float fTexY,int nFlag);
 	void DrawEnemy();
 	void UninitEnemy();
-	void EnemyMove();//“G‚Ì“®‚«
+	void EnemyMove();//æ•µã®å‹•ã
 
 	float GetEnemyX(int nNum){return EnemyBase[nNum].chkPosX();}
 	float GetEnemyY(int nNum){return EnemyBase[nNum].chkPosY();}
@@ -41,20 +96,23 @@ public:
 
 	int GetFLag(int nNum){return EnemyBase[nNum].chkFlag();}
 	int GetBFLag(int nNum){return EnemyBase[nNum].GetBlag();}
-	void AnimSet();//ƒAƒjƒ[ƒVƒ‡ƒ“ƒZƒbƒg
+	void AnimSet();//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚»ãƒƒãƒˆ
 
 private:
 	cBase EnemyBase[ENEMY_MAX];
+	Enemy* enemies[ENEMY_MAX];
 	Poly EnemyPolygon;
 	
 	float c_fLength;
 	float c_fAngle;
-	D3DXVECTOR3 c_pos[ENEMY_MAX];//ƒ|ƒŠƒSƒ“‚ÌˆÊ’u
-	D3DXVECTOR3 c_rot;//‰ñ“]—Ê
+	D3DXVECTOR3 c_pos[ENEMY_MAX];//ãƒãƒªã‚´ãƒ³ã®ä½ç½®
+	D3DXVECTOR3 c_rot;//å›è»¢é‡
 
-	int c_nPTexPattern;//ƒeƒNƒXƒ`ƒƒƒpƒ^[ƒ“
-	int c_nPTexMove;//ƒeƒNƒXƒ`ƒƒƒpƒ^[ƒ“‚ÌˆÚ“®—Ê
+	int c_nPTexPattern;//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‘ã‚¿ãƒ¼ãƒ³
+	int c_nPTexMove;//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ç§»å‹•é‡
 	
+	void CreateEnemyInstance(int nNum, int enemyType);
+	void CleanupEnemyInstance(int nNum);
 };
 
 #endif
